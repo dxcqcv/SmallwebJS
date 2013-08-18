@@ -1,0 +1,109 @@
+﻿body
+{
+    margin: 0; /* Remove body margin/padding */
+    padding: 0; /* Remove scroll bars on browser window */
+    font-size: 12px;
+    color: #000;
+	height:100%;
+	font-family:宋体;
+}
+
+html
+{
+    margin: 0; /* Remove body margin/padding */
+    padding: 0; 
+    height:100%;
+}
+
+body, div, dl, dt, dd, ul, ol, li, pre, h3, code, form, fieldset, legend, input, button, textarea, p, blockquote, th
+{
+    margin: 0;
+    margin: 0;
+    padding: 0;
+    padding: 0;
+}
+ul{ list-style:none;}
+a{ text-decoration:none;font-size:12px;}
+#seeker_container{width:100%; margin:0 auto; }
+img{border:0}
+.search
+{
+    color:Purple;
+    cursor:pointer;
+}
+
+#loadui_tipshowText
+{
+	position:absolute;
+	z-index:100000;
+	background-color:#FFF;
+	padding:15px;
+	border: 1px solid #999999;
+	text-align:center;
+}
+
+.hidden{ visibility:hidden;}
+
+.ui-dialog .ui-dialog-buttonpane button {
+    margin: 0 4px 0 0 !important;
+    padding: 0 !important;   
+}
+.ui-button-text{line-height:0.8em !important}
+
+#btnbilltype{ width:21px;height:23px;_height:23px;height:25px \9;_width:21px; _line-height:1.1em;_padding:0px; background:url(../../images/feiyong_11.jpg);_background:url(../../images/feiyong_15.jpg); background:url(../../images/feiyong_15.jpg) \9;  background-repeat:no-repeat; text-align:center; border:0px;}
+#btnselemp{ width:21px;height:23px;_height:21px;height:25px \9;_width:21px; _line-height:0.9em;_padding:0px; background:url(../../images/feiyong_11.jpg);_background:url(../../images/feiyong_15.jpg); background:url(../../images/feiyong_15.jpg) \9;  background-repeat:no-repeat; text-align:center; border:0px;}
+.clear{ clear:both;}
+
+button {   height:30px;_height:21px; font-family:Arial; color:#000; font-size:12px;   cursor: pointer;
+    line-height: 1.4em;
+    _line-height: 1.5em;
+    overflow: visible;
+    padding: 0.2em 0.6em 0.4em;
+    width: auto;
+    background: url("images/jqgrid/ui-bg_glass_85_dfeffc_1x400.png") repeat-x scroll 50% 50% #DFEFFC;
+    border: 1px solid #C5DBEC;
+    color: #2E6E9E;
+    font-weight: bold;     
+}
+
+
+input {   height:21px; _height:19px; _padding-top:2px; height:19px \9; padding-top:2px \9;  }
+input:disabled{
+background-color: #f4f4f4;
+color:#999;
+}
+.bottom-line {
+    border-bottom: 1px solid #E8E8E8;
+}
+.bottom-section .corner {
+    background-repeat: no-repeat;
+    font-size: 1px;
+    height: 9px;
+    overflow: hidden;
+    width: 6px;
+    z-index: 1;
+}
+.bottom-section .bottom-left {
+height: 9px;
+width: 7px;
+   background-position: left bottom;
+    float: left;
+}
+.bottom-section .bottom-right {
+height: 9px;
+width: 7px;
+  background-position: right bottom;
+    float: right;
+}
+.ui-tabs-close{ float:left; }
+.filesupdata{ height:44px;_display:block;}
+.dj_query{ height:24px; _height:20px;_line-height:14px; line-height:15px; line-height:18px \9;}
+.ui-layout-resizer{ background:#118bdf;}
+#btnQuery{ width:66px; height:26px; background: url("../../images/feiyong_09.jpg") repeat-x scroll 50% 50% #DFEFFC;}
+#glbilllist{ width:280px; padding-top:5px;}
+#glbilllist li{ margin-bottom:5px;}
+#glbilllist li a{ color:#118BDF;}
+.no-newsolu{width:16px; height:16px; display:block; float:left; background-image:url(images/normalsearch.png); background-repeat:no-repeat; margin-top:5px; margin-right:2px;}
+.ad-newsolu{width:16px; height:16px; display:block; float:left; background-image:url(images/advancedsearch.png); background-repeat:no-repeat; margin-top:5px; margin-right:2px;}
+#dialog-message{ _height:100px !important; text-align:left !important; }
+/*#jqgh_billtypegrid_cb input{ display:none !important;}*/
