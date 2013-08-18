@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>开发人员常用的，dom操作，性能优化。。</title>
+    <style type="text/css">
+
+        ul,li,a{
+            padding: 0px;
+            margin: 0px;
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        ul{
+            height: 60px;
+            border: 1px solid #893;
+        }
+    </style>
+    <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript">
+        var getChildrenObject = function(id,classname){
+            var seesion = document.getElementById(id);
+            var children = seesion.children;
+            var objects = null;
+            for(var i = 0,len = children.length;i<len;i++){
+                if(children[i].getAttribute('class') === classname){
+                    objects = children[i];
+                }
+            }
+            if(objects == null){
+                throw new Error('子节点中不存在'+classname+'这个class');
+            }
+            return objects;
+        }
+
+        var getHTML = function(array,html){
+            var data = [];
+            for(var i = 0,len = array.length;i<len;i++){
+                data.push('<'+html+'>'+array[i]+'</'+html+'>');
+            }
+            return data;
+        }
+
+        var getDOMHTML = function(array,html){
+            var createStr,
+                createDivs = document.createElement('div');
+            for(var j = 0,len = array.length;j<len;j++){
+                createStr = document.createElement(html);
+                createStr.appendChild(document.createTextNode(array[j]));
+                createDivs.appendChild(createStr);
+            }
+            return createDivs;
+        }
+
+        var getCloneHTML = function(array,html){
+            var createStr = document.createElement(html),
+                createDivs = null,
+                createDivs = document.createElement('div'),
+                span;
+            for(var j = 0,len = array.length;j<len;j++){
+                span = createStr.cloneNode(false);
+                span.appendChild(document.createTextNode(array[j]));
+                createDivs.appendChild(span);
+            }
+            span = null;
+            createStr = null;
+            return createDivs;
+        }
+
+        var getcollNodeslist = function(id,html){
+            var table = document.getElementById(id),
+                td = table.getElementsByTagName(html),
+                len = td.length,
+                data = [],
+                el = null;
+            for(var i = 0;i<len;i++){
+                el = td[i];
+                data.push(el.innerHTML);
+            }
+            el = null;
+            return data;
+        }
+
+        $(function(){
+            //获取元素的方式
+            /*jQuery写法*/
+            var $seesion = $('.seesion','#name');
+            var _seesion = $('#name');
+            var _$seesion = $('.seesion',_seesion);
+            /*原生写法*/
+            var seesion = getChildrenObject('name','seesion');
+
+
+            //设置样式的方式
+            /*jQuery提供的方法有css()方法*/
+            var $style = _$seesion[0].style;
+            $style.border = '1px solid #444';
+            $style.height = '40px';
+
+
+            //插入节点的方式
+            var data = ['梁博','温桂龙','向文文'];
+            /*
+                方式一，方式二，是最常用的，就效率而言，数组的形势，比拼接字符串
+                形式效率要高。
+            */
+            /*方式一*/
+            var str = '';
+            for(var i = 0,len = data.length;i<len;i++){
+                str += '<span>'+data[i]+'</span>';
+            }
+            //seesion.innerHTML = str;
+            /*方式二*/
+            var _str = getHTML(data,'span');
+            //seesion.innerHTML = _str.join('');
+            /*
+                下面两种方式，是在最新的游览器中性能最快。
+            */
+            /*方式三*/
+            var createDOM = getDOMHTML(data,'span');
+            //seesion.appendChild(createDOM);
+            /*方式四*/
+            var _createDOM = getCloneHTML(data,'span');
+            seesion.appendChild(_createDOM);
+
+            /*
+                缓存访问机制，再处理缓存访问机制的时候，主要应用在框架内部处理中。
+                但是这个机制也可以由开发人员，在实际业务中来编写，这样在
+                我们的应用中会有性能显著提升。
+            */
+            var _td = getcollNodeslist('seename','td');
+            //console.log(_td);
+            /*
+                重排，当页面布局和几何属性改变的时候会发生重排。
+                重排是非常非常影响性能的，所以，解决这个问题的时候，要考虑多一点。
+                一般来说，尽量的减少重排，可以这么做。
+                通过隐藏的方式，让dom脱离文档。
+                然后改变这些需要改变的几何属性，添加，删除。
+                最后显示。
+
+                设置几何属性时，一次获取，一次改变。
+                
+                等等
+            */
+            //一次获取，一次改变
+            var doc = document.getElementById('docname');
+            doc.style.cssText = 'border:2px solid #444;';
+
+            document.getElementById('red').onchange = function(){
+                doc.style.display = 'none';
+                doc.style.cssText = 'width:250px;height:20px;border:2px solid #586';
+                doc.style.display = 'block';
+            }
+            document.getElementById('blue').onchange = function(){
+                doc.style.display = 'none';
+                doc.style.cssText = 'width:450px;height:120px;border:2px solid #987';
+                doc.style.display = 'block';
+            }
+
+            /*
+                委托，当页面中存在大量的元素时，绑定事件，尽量用委托。
+            */
+            document.getElementById('affairs').addEventListener('click',function(e){
+                e = e || window.event;
+                var target = e.target || e.srcElement;
+                var job,hrefs;
+                if(target.nodeName !== 'A'){
+                    return;
+                }
+                hrefs = target.getAttribute('href').split('/');
+                job = hrefs[hrefs.length -1];
+                job = job.replace('.html','');
+                $.ajax({
+                  url: job,
+                  type: 'POST',
+                  dataType: 'xml/html/script/json/jsonp',
+                  data: {param1: 'value1'},
+                  complete: function(xhr, textStatus) {
+                    //called when complete
+                  },
+                  success: function(data, textStatus, xhr) {
+                    //called when successful
+                  },
+                  error: function(xhr, textStatus, errorThrown) {
+                    //called when there is an error
+                  }
+                });
+                
+                if(typeof e.preventDefault === 'function'){
+                    e.preventDefault();
+                    e.stopPropagation();
+                }else{
+                    e.returnValue = false;
+                    e.cancelBubble = true;
+                }
+            },false);
+        });
+    </script>
+</head>
+<body>
+    <div id="name">
+        <!--优化获取dom元素对象-->
+        <div class="seesion"></div>
+    </div>
+    <table id="seename">
+        <tr>
+            <td>120</td>
+            <td>130</td>
+        </tr>
+        <tr>
+            <td>100</td>
+            <td>12</td>
+        </tr>
+    </table>
+    <!--重排-->
+    <div id="docname">
+        gg
+    </div>
+    <input type="radio" name="a" id="red">红色
+    <input type="radio" name="a" id="blue">蓝色
+
+    <!--委托-->
+    <ul id="affairs">
+        <li>
+            <a href="ajax.html">你好</a>
+        </li>
+        <li>
+            <a href="lok.html">我好</a>
+        </li>
+    </ul>
+</body>
+</html>
