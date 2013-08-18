@@ -1,0 +1,149 @@
+
+.file{
+	width: 140px;
+	height: 30px;
+	font-family: 微软雅黑;
+	overflow: hidden;
+}
+.file a{
+	width: 140px;
+	height: 30px;
+	line-height: 30px;
+	color: #fff;
+	background: #F92672;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 4px;
+	box-shadow: #444 0 0 4px;
+	font-size: 12px;
+}
+.file a:hover{
+	background: #FC71A2;
+}
+/*
+	多文件上传时，弹出框的应用
+*/
+.file_dialog{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 650px;
+	background: #fff;
+	z-index: 100;
+}
+.file_dia_title{
+	width: 640px;
+	height: 30px;
+	background: #F92672;
+	color: #fff;
+	line-height: 30px;
+	padding: 0 5px 0 5px;
+	font-size: 12px;
+	border:1px solid #F92672;
+	cursor: move;
+}
+.file_dia_cont{
+	width: 640px;
+	padding: 0 5px 0 5px;
+	height: 350px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	border-left:1px solid #F92672;
+	border-right: 1px solid #F92672;
+}
+.file_dia_cont h1{
+	font-size: 12px;
+	margin: 10px 0 10px 0;
+}
+.file_trad{
+	width: 100%;
+	height: 35px;
+	line-height: 30px;
+	border-bottom: 1px dotted #F92672;
+	padding: 5px 0 5px 0;
+}
+.file_trad h1{
+	width: 450px;
+	float: left;
+	margin: 0px;
+}
+.file_dropSend{
+	width: 640px;
+
+}
+.file_dia_sbumint{
+	width: 640px;
+	height: 30px;
+	border: 1px solid #F92672;
+	padding: 5px 5px 0 5px;
+}
+.file_dia_sbumint a{
+	width: 85px;
+	height: 25px;
+	display: block;
+	background: #F92672;
+	color: #fff;
+	margin-left: 10px;
+	float:right;
+	text-align: center;
+	text-decoration: none;
+	font-size: 14px;
+	line-height: 25px;
+}
+.file_dia_sbumint a:hover{
+	background: #FC71A2;
+}
+.file_slide_call{
+	height:20px;
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	z-index:100;
+}
+.file_input{
+	width:70px;
+	height:30px;
+	cursor: pointer;
+	margin: 0;
+	opacity: 0;
+	padding: 0;
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index:10;
+}
+.file_sliS{
+	width:0px;height:20px;
+	background: #F92672;
+}
+.file_succeed{
+	font-family: 微软雅黑;
+	display:none;
+	position:absolute;
+	width:140px;
+	height:30px;
+	line-height:30px;
+	background:#66D9EF;
+	color:#fff;
+	font-size:12px;
+	text-align: center;
+	z-index: 30;
+}
+.file_contAccount_ul{
+	padding: 5px 0 0 0;
+}
+.file_contAccount_ul li{
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	padding: 5px;
+	color: #fff;
+	background: #F92672;
+	float: left;
+	margin: 0 5px 5px 5px;
+	font-size: 14px;
+}
+.file_contAccount_ul li:hover{
+	background: #FC71A2;
+}

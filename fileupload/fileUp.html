@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<title>文件上传前端小例子</title>
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="stylesheet" type="text/css" href="css/reset-min.css" />
+		<link rel="stylesheet" type="text/css" href="css/file.css">
+		<style type="text/css">
+			.allcon{
+				width: 300px;
+				height: 200px;
+				border:4px solid #444;
+				float: left;
+				
+			}
+			.content{
+				width:450px;
+				height: 200px;
+				border:4px solid #896;
+				float: left;
+				margin: 0 10px 0 10px;
+			}
+		</style>
+
+		<script type="text/javascript" src="libs/jquery-1.8.2.js"></script>
+		<script type="text/javascript" src="libs/fileUp.js"></script>
+		<script type="text/javascript">
+			(function(){
+				$(function(){
+					var bool = true;
+					var upcontent = $('#upcontent').text();
+					var gg = new fileUpHtml.Up('upfile',{
+						account:'http://localhost:8081/fileup/data/success.php',
+						dialog:true,
+						onSubmit:function(info){
+							$.each(info,function(i){
+								var name = info[i].name;
+								var type = info[i].type;
+								var size = info[i].size;
+								console.log(size);
+								if(upcontent == info[i].name){
+									alert('错误信息：{'+name+'}不能上传重复名的文件');
+									bool = false;
+									return false;
+								}
+								if(size !== 0 && size > 11110000){
+									alert('错误信息：{'+name+'}上传文件超出最大容量');
+									bool = false;
+									return false;
+								}
+								if(size == 0){
+									alert('错误信息：{'+name+'}不能上传空文件');
+									bool = false;
+									return false;
+								}
+								bool = true;
+							});
+							return bool;
+						}
+					});
+					var sendbool = true;
+					//console.log(gg);
+					var kk = new fileUpHtml.Up('sendfile',{
+						account:'http://localhost:8081/fileup/data/success.js',
+						dialog:false,
+						onSubmit:function(info){
+							$.each(info,function(i){
+								var name = info[i].name;
+								var type = info[i].type;
+								var size = info[i].size;
+								console.log(size);
+								if(upcontent == info[i].name){
+									alert('错误信息：{'+name+'}不能上传重复名的文件');
+									sendbool = false;
+									return false;
+								}
+								if(size !== 0 && size > 11110000){
+									alert('错误信息：{'+name+'}上传文件超出最大容量');
+									sendbool = false;
+									return false;
+								}
+								if(size == 0){
+									alert('错误信息：{'+name+'}不能上传空文件');
+									sendbool = false;
+									return false;
+								}
+								sendbool = true;
+							});
+							return sendbool;
+						}
+					});
+				})
+			})(jQuery);
+		</script>
+	</head>
+	<body>
+		<div id="upfile" class="allcon" style="z-index:30"></div>
+		<div id="upcontent" class="content"></div>
+		<div id="sendfile" class="allcon" style="z-index:10;"></div>
+	</body>
+</html>
