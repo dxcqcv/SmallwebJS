@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>For HTML5 App Canvas Drop PC_DEMO</title>
+    <meta charset = "utf-8">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <style type="text/css">
+   			body{font-family:微软雅黑;}
+    		.dropfer{width:150px;position:relative;float:left;border:2px solid #a7a4a4;border-right:0px;height:504px;border-left:0px; background: #efefef;}
+    		.drops{width:100px;height:60px;line-height:60px;text-align:center;display:block;background:#4686DD;cursor:move; color:#fff;box-shadow: #999 5px 2px 8px; float: left;border:2px solid #4686DD; margin: 10px 10px 10px 0;}
+    		.drops:hover{background:#5f9cee;}
+    		.cur{width:100px;height:60px;line-height:60px;text-align:center;display:block;border:2px solid #fff;cursor:auto;background:#ccc;box-shadow: #999 5px 2px 8px;float: left; margin: 10px 10px 10px 0;}
+    		.move{width:100px;height:50px;line-height:50px;text-align:center;background:#4686dd;color:#fff;display:block;cursor:pointer;box-shadow: #999 5px 2px 8px;}
+    		.move:hover{background:#5f9cee;}
+    		.nav{float: left;}
+            h1{padding: 0px;margin: 0px;}
+            #canvasmouse{
+                position: relative;
+            }
+            ._money{
+                width: 150px;
+                height: 30px;
+                border: 1px dashed #000;
+                position: absolute;
+            }
+            .km{
+                width:148px;
+                height: 30px;
+                line-height: 25px;
+                text-align: center;
+                color: #fff; 
+                float: left; 
+                font-size: 14px;
+                cursor: pointer;
+                background: #4686DD;
+                border: 1px dashed #000;
+            }
+            .kmcont{
+                width: 150px;
+                float: left;
+            }
+            #dropFather{
+                position: relative;
+            }
+            .chek{
+                width: 25px;
+                float: left;
+                height: 25px;
+                margin: 10px 0 0 0;
+            }
+            .navs_app{
+                padding-left: 5px;
+            }
+            .navs_app a{
+                color: #000;
+            }
+    </style>
+    <link rel="stylesheet" type="text/css" href="css/jquery.ui.css">
+    <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript" src="libs/jquery.ui.js"></script>
+    <script type="text/javascript" src="libs/canvasKMLibsClass.js"></script>
+</head>
+<body style="position:relative;background:#fff;">
+    <script type="text/javascript" src="libs/link.js"></script>
+	<section id="centerContent">
+		<div id="canvasmouse" style="float:left;border:2px solid #a7a4a4;border-left:0px;">
+			<canvas id="canvas" width="800" height="500" style="background:#fff;" />	
+		</div>
+        <section>
+    		<nav class="nav">
+    			<!--<div style="float:left;margin:10px;" class="move" id="dropsmove">清除</div>-->
+    			<div style="float:left;margin:10px;" class="move" id="dropSave">预览</div>
+                <!--<div style="float:left;margin:10px;" class="move" id="dropSave"><a href="pc_appGrid.html" style="color:#fff;">退后</a></div>-->
+    		</nav>
+        </section>
+	</section>
+</body>
+</html>

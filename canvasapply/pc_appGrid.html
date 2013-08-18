@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>For HTML5 App Canvas Drop PC_DEMO</title>
+    <meta charset = "utf-8">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <style type="text/css">
+    	body{font-family:微软雅黑;}
+    	.dropfer{width:150px;position:relative;float:left;border:2px solid #a7a4a4;border-right:0px;height:504px;border-left:0px; background: #efefef;}
+    	.drops{width:100px;height:60px;line-height:60px;text-align:center;display:block;background:#4686DD;cursor:move; color:#fff;box-shadow: #999 5px 2px 8px; float: left;border:2px solid #4686DD; margin: 10px 10px 10px 0;}
+    	.drops:hover{background:#5f9cee;}
+    	.cur{width:100px;height:60px;line-height:60px;text-align:center;display:block;border:2px solid #fff;cursor:auto;background:#ccc;box-shadow: #999 5px 2px 8px;float: left; margin: 10px 10px 10px 0;}
+    	.move{width:60px;height:50px;line-height:50px;text-align:center;background:#4686dd;color:#fff;display:block;cursor:pointer;box-shadow: #999 5px 2px 8px; font-size: 12px;}
+    	.move:hover{background:#5f9cee;}
+    	.nav{float: left;}
+        h1{padding: 0px;margin: 0px;}
+        #canvasmouse{
+            position: relative;
+        }
+        ._money{
+            width: 150px;
+            height: 30px;
+            border: 1px dashed #000;
+            position: absolute;
+        }
+        .km{
+            width:148px;
+            height: 30px;
+            line-height: 25px;
+            text-align: center;
+            color: #fff; 
+            float: left; 
+            font-size: 14px;
+            cursor: pointer;
+            background: #4686DD;
+            border: 1px dashed #000;
+        }
+        .kmcont{
+            width: 150px;
+            float: left;
+            display: none;
+        }
+        #dropFather{
+            position: relative;
+        }
+        .chek{
+            width: 25px;
+            float: left;
+            height: 25px;
+            margin: 10px 0 0 0;
+        }
+        .navs_app{
+            padding-left: 5px;
+        }
+        .navs_app a{
+            color: #000;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="css/ui.jqgrid.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.ui.css">
+
+    <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript" src="libs/jquery.ui.js"></script>
+    <script type="text/javascript" src="libs/grid.locale-cn.js"></script>
+    <script type="text/javascript" src="libs/jquery.jqgrid.js"></script>
+    <script type="text/javascript">
+        (function($){
+            var comm = {
+                    baseUrl:function(){
+                        var loca = document.location.href;
+                        var _url = loca.substring(0,loca.lastIndexOf('/'));
+                        return _url;
+                    },
+                    getSrv:function(parms){
+                        if(parms !== undefined){
+                                var callback = parms.callback;
+                        }
+                        var ParAjax = {
+                                type:'GET',
+                                dataType:'json',
+                                success: function (data) {
+                                        var data = data;
+                                    if (typeof callback === 'function') {
+                                         callback(data);
+                                    } 
+                                },
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                        alert('加载出错');      
+                                }
+                        }
+                        $.ajax($.extend(ParAjax,parms));
+                    }
+            }
+            var data = {"rows":[
+                {"typeid":"库存金额","typename":"1001","dfje":"50,100.00","id:":1,"jfje":"","kmdm":"100201","kmmc":"银行存款农行","ljdfe":"50,100.00","ljjfe":"","objectid1":"1","objectids":"5-1","objectname1":"销售商品、提供劳务收到的现金","qcfx":"借","qcye":"100.00","jfe":"125,23.00","qmye":"50,000.00","qmyefx":"贷"},
+                {"typeid":"库存金额","typename":"1002","dfje":"55,000.00","id:":2,"jfje":"","kmdm":"100201","kmmc":"银行存款农行","ljdfe":"55,000.00","ljjfe":"","objectid1":"3","objectids":"5-3","objectname1":"收到的其他与经营活动的现金","qcfx":"平","qcye":"","jfe":"100,568.00","qmye":"55,000.00","qmyefx":"贷"},
+                {"typeid":"库存金额","typename":"1003","dfje":"100,000.00","id:":3,"jfje":"","kmdm":"100201","kmmc":"银行存款农行","ljdfe":"100,000.00","ljjfe":"","objectid1":"5","objectids":"5-5","objectname1":"支付给职工以及为职工支付的现金","qcfx":"平","qcye":"","jfe":"235,23.00","qmye":"100,000.00","qmyefx":"贷"},
+                {"typeid":"库存金额","typename":"1004","dfje":"205,100.00","id":4,"id:":4,"jfje":"","kmdm":"100201小计","ljdfe":"205,100.00","ljjfe":"","qcfx":"借","qcye":"100.00","jfe":"546,23.00","qmye":"205,000.00","qmyefx":"贷"},
+                {"typeid":"库存金额","typename":"1005","dfje":"3,872.48","id:":5,"jfje":"232,370.67","kmdm":"100202","kmmc":"银行存款建行","ljdfe":"3,872.48","ljjfe":"232,370.67","objectid1":"1","objectids":"5-1","objectname1":"销售商品、提供劳务收到的现金","qcfx":"平","qcye":"","jfe":"1345,23.00","qmye":"228,498.19","qmyefx":"借"},
+                {"typeid":"库存金额","typename":"1006","dfje":"1,000,000.00","id:":6,"jfje":"","kmdm":"100202","kmmc":"银行存款建行","ljdfe":"1,000,000.00","ljjfe":"","objectid1":"3","objectids":"5-3","objectname1":"收到的其他与经营活动的现金","qcfx":"平","qcye":"","jfe":"653,23.00","qmye":"1,000,000.00","qmyefx":"贷"},
+                {"typeid":"库存金额","typename":"1007","dfje":"","id:":7,"jfje":"2,002,500.00","kmdm":"100202","kmmc":"银行存款建行","ljdfe":"","ljjfe":"2,002,500.00","objectid1":"5","objectids":"5-5","objectname1":"支付给职工以及为职工支付的现金","qcfx":"平","qcye":"","jfe":"768,23.00","qmye":"2,002,500.00","qmyefx":"借"},
+                {"typeid":"库存金额","typename":"1008","dfje":"1,003,872.48","id:":8,"jfje":"2,234,870.67","kmdm":"100202小计","ljdfe":"1,003,872.48","ljjfe":"2,234,870.67","qcfx":"平","qcye":"","dfe":"51,23.00","jfe":"222,23.00","qmye":"1,230,998.19","qmyefx":"借"},
+                {"typeid":"库存金额","typename":"1009","dfje":"1,208,972.48","id:":9,"jfje":"2,234,870.67","kmdm":"总计","ljdfe":"1,208,972.48","ljjfe":"2,234,870.67","qcfx":"借","qcye":"100.00","qmye":"1,025,998.19","qmyefx":"借"},
+                {"typeid":"库存金额","typename":"1011","dfje":"50,100.00","id:":10,"jfje":"","kmdm":"100201","kmmc":"银行存款农行","ljdfe":"50,100.00","ljjfe":"","objectid1":"1","objectids":"5-1","objectname1":"销售商品、提供劳务收到的现金","qcfx":"借","qcye":"100.00","jfe":"125,23.00","qmye":"50,000.00","qmyefx":"贷"},
+                {"typeid":"库存金额","typename":"1012","dfje":"55,000.00","id:":11,"jfje":"","kmdm":"100201","kmmc":"银行存款农行","ljdfe":"55,000.00","ljjfe":"","objectid1":"3","objectids":"5-3","objectname1":"收到的其他与经营活动的现金","qcfx":"平","qcye":"","dfe":"224,223.00","jfe":"100,568.00","qmye":"55,000.00","qmyefx":"贷"},
+                {"typeid":"银行存款","typename":"1013","dfje":"100,000.00","id:":12,"jfje":"","kmdm":"100201","kmmc":"银行存款农行","ljdfe":"100,000.00","ljjfe":"","objectid1":"5","objectids":"5-5","objectname1":"支付给职工以及为职工支付的现金","qcfx":"平","qcye":"","dfe":"124,23.00","qmye":"100,000.00","qmyefx":"贷"},
+                {"typeid":"银行存款","typename":"1014","dfje":"205,100.00","id":13,"jfje":"","kmdm":"100201小计","ljdfe":"205,100.00","ljjfe":"","qcfx":"借","qcye":"100.00","dfe":"23,23.00","qmye":"205,000.00","qmyefx":"贷"},
+                {"typeid":"银行存款","typename":"1005","dfje":"3,872.48","id:":14,"jfje":"232,370.67","kmdm":"100202","kmmc":"银行存款建行","ljdfe":"3,872.48","ljjfe":"232,370.67","objectid1":"1","objectids":"5-1","objectname1":"销售商品、提供劳务收到的现金","qcfx":"平","qcye":"","dfe":"124,23.00","qmye":"228,498.19","qmyefx":"借"},
+                {"typeid":"银行存款","typename":"1015","dfje":"1,000,000.00","id:":15,"jfje":"","kmdm":"100202","kmmc":"银行存款建行","ljdfe":"1,000,000.00","ljjfe":"","objectid1":"3","objectids":"5-3","objectname1":"收到的其他与经营活动的现金","qcfx":"平","qcye":"","qmye":"1,000,000.00","qmyefx":"贷"},
+                {"typeid":"银行存款","typename":"1016","dfje":"","id:":16,"jfje":"2,002,500.00","kmdm":"100202","kmmc":"银行存款建行","ljdfe":"","ljjfe":"2,002,500.00","objectid1":"5","objectids":"5-5","objectname1":"支付给职工以及为职工支付的现金","qcfx":"平","qcye":"","dfe":"64,23.00","qmye":"2,002,500.00","qmyefx":"借"},
+                {"typeid":"银行存款","typename":"1017","dfje":"1,003,872.48","id:":17,"jfje":"2,234,870.67","kmdm":"100202小计","ljdfe":"1,003,872.48","ljjfe":"2,234,870.67","qcfx":"平","qcye":"","dfe":"124,23.00","qmye":"1,230,998.19","qmyefx":"借"},
+                {"typeid":"银行存款","typename":"1018","dfje":"1,208,972.48","id:":18,"jfje":"2,234,870.67","kmdm":"总计","ljdfe":"1,208,972.48","ljjfe":"2,234,870.67","qcfx":"借","qcye":"100.00","dfe":"564,23.00","qmye":"1,025,998.19","qmyefx":"借"}
+                ]};
+
+            var GridPars = {
+                    data:data.rows,
+                    datatype: "local",
+                    rowNum: 300,
+                    colNames: ["id", "科目名称", "科目代码", "对象编码", "对象名称", "方向", "期初余额", "借方金额", "贷方金额", "方向", "期末余额", "借方累计发生额", "贷方累计发生额"],
+                    colModel: [
+                    {name: 'id',index: 'id', hidden: true}, 
+                    {name: 'typeid', index: 'typeid', }, //对象类型编码
+                    {
+                        name: 'typename',
+                        index: 'typename',
+                        width: 100
+                    }, //对象类型
+                    {
+                        name: 'dxid',
+                        index: 'dxid',
+                        hidden: true
+                    }, //对象编码
+                    {
+                        name: 'dxmc',
+                        index: 'dxmc',
+                        width: 300,
+                        hidden: true
+                    }, //对象名称
+                    {
+                        name: 'qcfx',
+                        index: 'qcfx',
+                        width: 30,
+                        align: 'center'
+                    }, //方向
+                    {
+                        name: 'qcye',
+                        index: 'qcye',
+                        width: 100,
+                        align: 'right'
+                    }, //期初余额
+                    {
+                        name: 'jfe',
+                        index: 'jfe',
+                        width: 100,
+                        align: 'right'
+                    }, //借方发生额
+                    {
+                        name: 'dfe',
+                        index: 'dfe',
+                        width: 100,
+                        align: 'right'
+                    }, //贷方发生额
+                    {
+                        name: 'qmyefx',
+                        index: 'qmyefx',
+                        width: 30,
+                        align: 'center'
+                    }, //方向
+                    {
+                        name: 'qmye',
+                        index: 'qmye',
+                        width: 100,
+                        align: 'right'
+                    }, //期末余额
+                    {
+                        name: 'jfljfs',
+                        index: 'jfljfs',
+                        width: 100,
+                        align: 'right'
+                    }, //借方累计发生
+                    {
+                        name: 'dfljfs',
+                        index: 'dfljfs',
+                        width: 100,
+                        align: 'right'
+                    } //贷方累计发生
+                    ],
+                    jsonReader: {
+                        root: "rows",
+                        page: "currpage",
+                        total: "totalpages",
+                        records: "totalrecords",
+                        repeatitems: false,
+                        id: "0"
+                    },
+                    viewrecords: true,
+                    emptyrecords: "没有找到数据",
+                    //,autowidth:true
+                    cmTemplate: {
+                        sortable: false
+                    },
+                    height: "auto",
+                    loadonce: true,
+                    forceFit: true,
+                    altRows: true,
+                    loadError: function(xhr, status, error) {
+                        alert("加载错误" + status + "-" + error);
+                    }
+            };
+            var GridInits = function(){
+                var _url = comm.baseUrl();
+                $('#kmGrid').jqGrid(GridPars);
+            }
+            $(function(){
+                GridInits();
+            })
+        })(jQuery);
+    </script>
+</head>
+<body style="position:relative;background:#fff;">
+	<script type="text/javascript" src="libs/link.js"></script>
+    <section id="kmGridContent">
+        <section><table id="kmGrid"></table></section>
+    </section>
+</body>
+</html>

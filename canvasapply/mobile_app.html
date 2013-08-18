@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>For HTML5 App Canvas MOBILE_DEMO</title>
+    <meta charset = "utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.2.0.css">
+    <style type="text/css">
+        body{
+            font-size: 10px;
+        }
+    	#indexPage{
+            font-family: 微软雅黑;
+            font-size: 12px;
+            width: 300px;
+            padding: 0 5px 0 5px;
+            position: relative;
+        }
+        #contents{
+            padding: 5px 5px 0 0px;
+
+        }
+        .touchCon{
+            width: 120px;
+            height: 25px;
+            opacity: 0.8;
+            background: #fff;
+            display: none;
+            position: absolute;
+            line-height: 25px;
+            text-align: center;
+            color: #000;
+        }
+        .navs_app{
+            padding-left: 5px;
+        }
+        .navs_app a{
+            color: #000;
+        }
+    </style>
+    <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript" src="libs/canvasMobile.js"></script>   
+</head>
+<body style="position:relative;background:#fff;">
+
+	<section data-role="page" id="indexPage">
+        <h3>支持iPhone，320*480分辨率移动设备</h3>
+        <h1>Canvas App  MOBILE_DEMO</h1>
+        <header id="exbtn">
+
+        </header>
+        <div data-role="content" id="contents" style="display:none;">
+            <canvas id="canvas" width="300" height="400" style="background: #fff;"></canvas>
+        </div>
+        <div class="touchCon" id="touchCon" style="border:1px solid #000;"></div>
+        <footer id="footer">
+            <nav  data-role="controlgroup" data-type="horizontal"  class="savebtn">
+                <a href="#" data-role="button" data-inline="true" data-theme="c" data-icon="gear" id="clearCanvas" title="画布清除">画布</a>
+                <a href="#Sview" data-role="button" data-rel="dialog"  data-inline="true" data-theme="c" data-icon="gear" id="saveCanvas" title="预览">预览</a>
+                <a href="#" data-role="button" data-inline="true" data-theme="c" data-icon="gear" id="clearFloat" title="浮动清除">浮动</a>
+            </nav>
+        </footer>
+    </section>
+    <section id="Sview" data-role="page">
+            <article data-role="content">
+                <img src="" style="display:none;" id="save">
+            </article>
+            <footer data-role="footer">
+                <a href="#indexPage" data-role="button" data-inline="true"  data-icon="back" id="backs">返回初始页</a>
+            </footer>
+    </section>  
+</body>
+</html>

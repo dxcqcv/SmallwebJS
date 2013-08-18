@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas App PC_DEMO（HTML5）</title>
+    <meta charset = "utf-8">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <style type="text/css">
+   			body{font-family:微软雅黑;}
+    		.dropfer{width:130px;position:relative;float:left;border:2px solid #a7a4a4;border-right:0px;height:504px;border-left:0px; background: #efefef;}
+    		.drops{width:100px;height:60px;line-height:60px;text-align:center;display:block;background:#4686DD;position:absolute;cursor:move; color:#fff;box-shadow: #999 5px 2px 8px;}
+    		.drops:hover{background:#5f9cee; color: #000;}
+    		.cur{width:100px;height:60px;line-height:60px;text-align:center;display:block;border:2px solid #fff;position:absolute;cursor:auto;background:#ccc;box-shadow: #999 5px 2px 8px;}
+    		.move{width:100px;height:50px;line-height:50px;text-align:center;background:#4686dd;color:#fff;display:block;cursor:pointer;box-shadow: #999 5px 2px 8px;}
+    		.move:hover{background:#5f9cee;color: #000;}
+    		.nav{float: left;}
+            .navs_app{
+                padding-left: 5px;
+            }
+            .navs_app a{
+                 color: #000;
+            }
+    </style>
+    <link rel="stylesheet" type="text/css" href="css/jquery.ui.css">
+    <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript" src="libs/jquery.ui.js"></script>
+    <script type="text/javascript" src="libs/canvas.js"></script>
+</head>
+<body style="position:relative;background:#fff;">
+	<script type="text/javascript" src="libs/link.js"></script>
+	<section id="centerContent" style="display:none;">
+		<div id="canvasmouse" style="float:left;border:2px solid #a7a4a4;border-left:0px;">
+			<canvas id="canvas" width="800" height="500" style="background:#fff;" />	
+		</div>
+        <section>
+    		<nav class="nav">
+    			<div style="float:left;margin:10px;" class="move" id="dropsmove">恢复与清除</div>
+    			<div style="float:left;margin:10px;" class="move" id="dropSave">预览</div>
+    		</nav>
+        </section>
+	</section>
+</body>
+</html>
