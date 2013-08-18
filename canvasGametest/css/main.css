@@ -1,0 +1,40 @@
+body{margin:0px; padding:0px;}
+.canvas_main{ border:1px solid #EAEAEA; margin:0 auto; position:absolute;top: 0;}
+.uiScreen {height: inherit;left: 0;position: absolute;top: 0;width: inherit;}
+#screens {height: 500px;width: 1280px;}
+#startScreen {background: url("../res/mbg.jpg") no-repeat scroll center center transparent;}
+#piratesLoveDaisies {background-color: #FFF;border: 1px solid #222222;height: 500px;position: absolute;top: 25px;width: 1280px;}
+#mainStartButton {right: 100px; position: absolute; top: 602px;}
+#mainHelpButton {left: 100px; position: absolute; top: 602px;}
+#mainHighscoreButton {left: 500px;position: absolute;top: 602px;}
+.panelBackground {background: url("../res/btn/btn_red_c.png") repeat scroll 0 0 transparent; height: 72px; width: 290px;}
+.largeUIButton {background-image: url("../res/btn/largeButtonFabric_up.png"); cursor: pointer;  display: block;font-family: 微软雅黑,幼圆;  font-size: 28px; font-weight: normal;height: 40px; margin-left: auto; margin-right: auto;position: relative;text-align: center;top: 15px;width: 278px;color:#000;}
+.largeUIButton:hover {background-image: url("../res/btn/largeButtonFabric_over.png");}
+#topNav {
+    background: url("../img/TopNavigation_background.png") no-repeat scroll 0 0 transparent;
+    height: 37px;
+    padding-top: 5px;
+    position: absolute;
+    vertical-align: middle;
+    width: 980px;
+    z-index: 15;
+}
+#muteBtn {
+    left: 725px;
+    position: absolute;
+    top: 2px;
+    z-index: 100;
+}
+.smallUIButton {
+    background: url("../img/ui/smallButtonFabric_up.png") repeat scroll 0 0 transparent;
+    cursor: pointer;
+    display: block;
+    font-family: freeBooterFont,Times;
+    font-size: 24px;
+    font-weight: normal;
+    height: 26px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 80px;
+}

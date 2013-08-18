@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>图形测试</title>
+<style> 
+*{margin:0;padding:0;} 
+.canvas {border: 1px solid #222222; margin:0 auto; position:absolute;top: 0;}
+</style> 
+<script type="text/javascript" src="libs/jquery.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+<script>
+	var paoimg = new Image();
+	paoimg.src = "pao.png";
+	function CreateCanvas(id, idx){
+		$("body").append('<canvas id="'+ id +'" width="500" height="300" class="canvas" style="z-index:'+ idx +'">');
+		return $("#"+ id);
+	}
+
+	window.onload=function(){
+		function PAO(){
+			this.x = 0;
+			this.y = 0;
+			this.px = 0;
+			this.py = 0;
+			this.img = paoimg;
+			this.translateX = 0;
+			this.translateY = 0;
+			this.angle = 0;
+			this.c=0;
+			this.draw = function(ctx){
+				var img = this.img;
+				ctx.save();
+				ctx.translate(this.translateX, this.translateY);
+				ctx.rotate(this.angle);
+				ctx.drawImage(img, this.x, this.y, img.width, img.height);
+
+				ctx.beginPath();
+				ctx.moveTo(0,0);
+				ctx.dashedLine(0,-this.c,1,0); //linex+liney Math.sqrt(y*y)
+				ctx.closePath();
+				ctx.stroke();			
+				ctx.restore();
+			}
+		}
+		var ballNum = 0;
+		function ball(){
+			this.x=0;
+			this.y=0;
+			this.tx=0;
+			this.ty=0;
+			this.reverseX = false;
+			this.reverseY = false;
+			this.radian = 0;
+			this.speed = 15;
+			var speed = this.speed;
+			var vx = 0, vy = 0;
+
+			this.draw = function(){
+				var x = this.x, y = this.y;
+				var gox = this.tx, goy = this.ty;
+				var radian = this.radian;	
+				vx = speed * Math.cos(radian);
+				vy = speed * Math.sin(radian);
+
+				if( x<0 || x+10>canvasWidth ){
+					this.reverseX = !this.reverseX;	
+					//vx = Math.abs(vx);
+				}
+
+				if( y<0 || y+10>canvasHeight)				
+				{
+					this.reverseY = !this.reverseY;
+				}
+		
+				ctxBall.save();
+				ctxBall.beginPath();
+				ctxBall.arc(x, y, 10, 0,Math.PI*2,false);
+				if( !this.reverseX ){
+					this.x += vx;
+				}else{
+					this.x -= vx;
+				}
+
+				if( !this.reverseY ){
+					this.y += vy;
+				}else
+					this.y -= vy;
+
+				if( x > 1000|| (y>1000||y<-100)){
+					ballArray.splice(0,1);					
+					console.log(ballArray);
+				}
+				ctxBall.fill();
+				ctxBall.closePath();
+				ctxBall.restore();
+			}
+		}
+
+		var canvas=CreateCanvas("canvas", 0).get(0),
+		ctx=canvas.getContext('2d'),
+		canvasBall=CreateCanvas("canvasBall", 2).get(0),
+		ctxBall=canvasBall.getContext('2d'),
+		canvasinfo=CreateCanvas("canvasinfo", 1).get(0),
+		ctxTxt=canvasinfo.getContext('2d'),		
+		canvasWidth = canvas.width,
+		canvasHeight = canvas.height,
+		paoimgW = paoimg.width, paoimgH = paoimg.height,
+		paoimgX = canvasWidth/2-(paoimgW/2), paoimgY = canvasHeight-paoimgH+(paoimgW/2),
+		mouse=captureMouse(canvasBall),
+		mouseclick=false, ballArray=[];
+
+		var pao = new PAO();
+		pao.x = -paoimgW/2;
+		pao.y = -paoimgH;	
+		pao.translateX = paoimgX;
+		pao.translateY = canvasHeight;	
+		var textarea = $("#textarea");
+		var handle = 0;
+
+		// ctxTxt.moveTo(paoimgX, 0);
+		// ctxTxt.lineTo(paoimgX, canvasHeight);
+		// ctxTxt.moveTo(0, paoimgY);
+		// ctxTxt.lineTo(canvasWidth, paoimgY);
+		// ctxTxt.stroke();
+
+		if (!window.requestAnimationFrame) {
+			window.requestAnimationFrame = (
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAnimationFrame ||
+			window.oRequestAnimationFrame ||
+			window.msRequestAnimationFrame ||
+			function (callback) {
+				return window.setTimeout(callback, 1000/60);
+			});
+
+			window.clearRequestTimeout = function(id) {
+			    window.cancelAnimationFrame ? window.cancelAnimationFrame(id) :
+			    window.webkitCancelAnimationFrame ? window.webkitCancelAnimationFrame(id) :
+			    window.webkitCancelRequestAnimationFrame ? window.webkitCancelRequestAnimationFrame(id) : /* Support for legacy API */
+			    window.mozCancelRequestAnimationFrame ? window.mozCancelRequestAnimationFrame(id) :
+			    window.oCancelRequestAnimationFrame    ? window.oCancelRequestAnimationFrame(id) :
+			    window.msCancelRequestAnimationFrame ? window.msCancelRequestAnimationFrame(id) :
+			    clearTimeout(id);
+			};			
+		}
+
+		function captureMouse(canvas){
+			var mouse = {x:0,y:0};
+			canvas.addEventListener("mousemove", function(evt){
+				var pos = getCursorPosition(evt, canvas);
+				var x = pos[0], y = pos[1];
+
+				mouse.x = x;
+				mouse.y = y;
+				//textarea.val("dx:"+ dx +", dy:"+ dy);
+			}, false);
+
+			canvas.addEventListener("mousedown", function(evt){
+				if( ballNum > 20){
+					alert("20个球可以了，再多我吃不消了啊");
+					return;
+				}
+				var pos = getCursorPosition(evt, canvas);
+				var x = pos[0], y = pos[1];
+				mouseclick=true;
+
+				var b = new ball();
+				b.x = pao.px;
+				b.y = pao.py;
+				b.tx = x;
+				b.ty = y;
+				b.radian = pao.angle-(90*Math.PI/180);
+				b.draw();
+
+				ballArray.push(b);
+
+				mouse.x = x;
+				mouse.y = y;
+				ballNum++;
+				//textarea.val("dx:"+ dx +", dy:"+ dy);
+			}, false);
+
+			return mouse;
+		}
+
+		var PI = Math.PI;
+		(function drawFrame(){
+			handle = window.requestAnimationFrame(drawFrame,canvas);
+			var x = mouse.x, y = mouse.y;
+			var dx=x-paoimgX, dy=y-canvasHeight;
+			//if( Math.abs(dy)<=50 ) return;
+
+			ctx.clearRect(0,0,canvasWidth,canvasHeight);
+			ctxBall.clearRect(0,0,canvasWidth,canvasHeight);
+			//var txtval = textarea.val();
+			var angle=Math.atan2(dy,dx);
+			var radians = 90 * Math.PI/180;
+			if( x !== 0){
+				var a = Math.pow(dx, 2);
+				var b = Math.pow(dy, 2);
+				var c = parseInt(Math.sqrt(a+b)); 
+				pao.c = c;
+				pao.angle = angle+radians;
+				//计算管与中心Y轴三角形
+				var jiaoA = PI-Math.abs(angle);
+				var sina = Math.sin(jiaoA);
+				//var cosa = Math.cos(sina);
+				var BC = paoimgH*sina; //口的对边	
+				var sinb = PI-jiaoA-(90*PI/180);
+				var cosB = Math.cos(sinb);
+				//余弦定理
+				var AC=Math.sqrt((paoimgH*paoimgH)+(BC*BC)-2*paoimgH*BC*cosB);
+				ballArray.forEach(function(item){
+					item.draw();
+				});
+
+				pao.px = dx<=0?paoimgX-AC:paoimgX+AC;
+				pao.py = canvasHeight-BC;
+				var str = "paoX:"+ pao.px +"\npaoY:"+ pao.py +"\ncosB:"+cosB;
+				str+="\nx:"+ x +" ,y:"+ y;
+
+				textarea.val(str);
+			}
+			pao.draw(ctx);
+		}());
+
+		$("#startDraw").click(function(){
+			location.reload();
+		});
+
+		$("#endDraw").click(function(){
+			clearRequestTimeout(handle);
+		});
+	};
+
+</script>
+
+</head>
+
+<body>
+	<div id="textelemt" style="height:300px;padding:6px;"></div> 
+	<div>
+		<textarea id="textarea" class="canvas" style="left:510px;height:300px;width:400px;"></textarea><br>
+		<input id="startDraw" type="button" value="开始">
+		<input id="endDraw" type="button" value="停止">
+	</div>
+</body>
+
+</html>
